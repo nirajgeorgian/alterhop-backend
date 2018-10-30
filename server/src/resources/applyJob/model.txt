@@ -1,0 +1,8 @@
+job_id
+likes(optional)
+dislikes(optional)
+users:[{
+  userid, resume, proposal
+}]
+vacancy
+notification_on_job_apply: 'if value is 10 then on every 10 bid it will push a notification'

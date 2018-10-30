@@ -1,0 +1,29 @@
+username
+email
+password
+phone
+address
+location
+profile_picture
+created_at
+updated_at
+verified
+social_urls: [
+  facebook, google, twitter, github, instagram, personal
+]
+notofication: {
+  job_posting,
+  company_promotion,
+  message|mail,
+  comment
+}
+profile_type: ["basic", "ultra", "premium"]
+account_type: ["provider", "seeker"]
+company: ["he registered which company like he is reponsible for posting jobs on paypal"]
+companies: ["he is working in which company like he has worked on paypal, uber, facebook"]
+/* *=> If job seeker
+	bids: [{ bidid: '12', status: 'default'|'approved'|'rejected', type: 'featured'|'default'|'premium' }]
+	// approved_bids: [bidid's]
+	// rejected_bids: [bidid's]
+/* *=> If Job Provider
+	jobs: [{ jobid: '1', status: 'active'|'disabled', bids: [{ bidid: '12', status: 'posted'|'approved'|'rejected', type: 'featured'|'default'|'premium' }]}]

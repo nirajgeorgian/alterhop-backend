@@ -1,0 +1,124 @@
+version: '3.5'
+services:
+  # base container for server api
+  altserver:
+    container_name: altserver
+    labels:
+      com.oojobapi.description: "oojob web app API server"
+    build: ./server
+    expose:
+      - ${API_SERVER_PORT}
+    ports:
+      - ${API_SERVER_PORT}:${API_SERVER_PORT}
+    environment:
+      NODE_ENV: development
+      REDIS_SERVER_PORT: ${REDIS_SERVER_PORT}
+      MONGO_SERVER_PORT: ${MONGO_SERVER_PORT}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      POSTGRES_SERVER_PORT: ${POSTGRES_SERVER_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      API_HOST: ${API_HOST}
+      API_SERVER_PORT: ${API_SERVER_PORT}
+    volumes:
+    - ./server:/alterhop/server
+    - /alterhop/server/node_modules
+    depends_on:
+      - mongo
+      - redis
+      - postgres
+    healthcheck:
+      test: ["CMD", "curl -f http://localhost:3030 || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 2
+    restart: "no"
+    networks:
+      altnetwork:
+        aliases:
+          - ooapi_1
+          - ooapi_2
+
+  # base container for client
+  # ooclient:
+  #   container_name: ooclient
+  #   labels:
+  #     com.oojob.description: "oojob web frontend"
+  #   build: ./client
+  #   expose:
+  #     - ${REACT_ENV_PORT}
+  #   ports:
+  #     - ${REACT_ENV_PORT}:${REACT_ENV_PORT}
+  #   environment:
+  #     REACT_ENV_PORT: ${REACT_ENV_PORT}
+  #     FRONTEND_API: ${FRONTEND_API}
+  #   volumes:
+  #     - ./client:/OoOO/client
+  #     - /OoOO/client/node_modules
+  #   networks:
+  #     - oooonetwork
+  # redis in memory database for server api
+  redis:
+    container_name: altredis
+    image: "redis"
+    restart: always
+    environment:
+      REDIS_SERVER_PORT: ${REDIS_SERVER_PORT}
+      dodo: "duck"
+    ports:
+    - ${REDIS_SERVER_PORT}:${REDIS_SERVER_PORT}
+    networks:
+      - altnetwork
+  # mongodb for server api
+  mongo:
+    container_name: altmongo
+    image: mongo
+    restart: always
+    ports:
+    - ${MONGO_SERVER_PORT}:${MONGO_SERVER_PORT}
+    environment:
+      MONGO_SERVER_PORT: ${MONGO_SERVER_PORT}
+    #  MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    #  MONGO_INITDB_ROOT_USERNAME: oooo
+    #  MONGO_INITDB_ROOT_PASSWORD: dodo
+    networks:
+      - altnetwork
+  # sql type database for server api
+  postgres:
+    container_name: altpostgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_SERVER_PORT: ${POSTGRES_SERVER_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+    - ${POSTGRES_SERVER_PORT}:${POSTGRES_SERVER_PORT}
+    networks:
+      - altnetwork
+  # live database for queries and socket connection
+  rethinkdb:
+    container_name: altrethinkdb
+    image: rethinkdb
+    restart: always
+    ports:
+    - "28015:28015"
+  # map nginx to another port and do routing on 3000
+  proxy:
+    build: ./server/nginx
+    container_name: proxy
+    restart: unless-stopped
+    networks:
+      - altnetwork
+    ports:
+      - 80:80
+      - 3000:3000
+    links:
+      - altserver
+
+networks:
+  altnetwork:
+    driver: bridge
+  # nginx:

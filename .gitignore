@@ -1,0 +1,32 @@
+# dependencies
+statichtml/node_modules
+server/node_modules
+server/client/node_modules
+
+# testing
+/coverage
+
+# production
+server/build
+# client/build
+
+# misc
+client/.DS_Store
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+
+# logs
+server/config/logs/logs
+server/dist/*.json
+server/dist/*.hot-update.js.map
+server/dist/*.hot-update.js
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# sendgrid key
+server/config/assests/emailTemplates/.sendgrid.env
+.idea

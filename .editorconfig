@@ -1,0 +1,17 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+[*.js]
+charset = 'utf-8'
+indent_style = tab
+indent_size = 2
+tab_width = 2
+trim_trailing_whitespace = false
+insert_final_newline = false
+end_of_line = lf
+max_line_length = 120
+
+[*.{json,yml}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

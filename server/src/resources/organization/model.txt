@@ -1,0 +1,26 @@
+id
+name
+desc
+url
+address
+phoneno
+org_type
+created_in_year
+member_count
+logo
+works_on ["javascript", "ruby", "rails"]
+reviews: [
+  {userid, stars, {pros, cons}, suggestions}
+]
+notofication: [
+  job_posting,
+  company_promotion,
+  message|mail,
+  comment
+]
+created_at
+updated_at
+hiring_status: on|off
+opensources: [{
+  title, description, url, languages, licence_type
+}]

@@ -1,0 +1,29 @@
+Database:
+	*=> MongoDb
+	*=> PostgresSql
+	*=> RethinkDb
+	*=> redis
+
+Backend Framework:
+	*=> Expressjs
+	*=> Graphql
+	*=> socket.io
+	*=> express-Graphql
+	*=> graphql-tools
+
+FrontEnd Framework:
+	*=> React
+	*=> Redux
+	*=> React Router
+	*=> Redux Saga
+	*=> apollo
+	*=> Scss
+	*=> RxJs
+	*=> Expressjs
+	*=> Webpack
+
+Environment:
+	*=> Docker
+	*=> Jenkins
+	*=> Ubuntu
+	*=> Bash Shell

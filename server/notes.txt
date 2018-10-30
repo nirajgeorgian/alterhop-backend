@@ -1,0 +1,5 @@
+resolver = (rootValue, args, context, info)
+
+// root value used for caching or it will get filled in nested resolvers
+
+// native ast in graphql
